@@ -25,19 +25,18 @@ const Spotify = {
     /* END - Stept 74 - Get a Spotify user’s access token */
 
     /* START - Step  - Send a search request to the Spotify API*/
-    search(searchTerm) {
-        return fetch('https://api.spotify.com/v1/search?type=TRACK&q=' + searchTerm, {headers: {Authorisation: "Bearer" + accessToken}})
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('request failed!');
-        }, networkError => console.log(networkError.message)
-        ).then(jsonResponse => {
+    search(term) {
+        return fetch("https://api.spotify.com/v1/search?type=track&q=" + term, {
+          headers: { Authorization: "Bearer" + accessToken }
+        })
+        .then((response) => { 
+           return response.json();
+            })
+            .then((jsonResponse) => {
             if(!jsonResponse.tracks) {
                 return [];
             }
-            return jsonResponse.tracks.map(track => ({
+            return jsonResponse.tracks.items.map(track => ({
                 id: track.id,
                 name: track.name,
                 artist: track.artists[0].name,
@@ -46,6 +45,7 @@ const Spotify = {
             }));
         });
     }
+/* END - Step  - Send a search request to the Spotify API*/
 }
 
 
