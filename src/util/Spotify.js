@@ -1,6 +1,6 @@
 
 var accessToken;
-const clientID = 'f09e6689c43c47298a42bb8e36555809';
+const clientID = '';
 const redirectURI = 'http://localhost:3000/';
 
 const Spotify = {
@@ -19,16 +19,20 @@ const Spotify = {
             window.history.pushState('Access Token', null, '/');
             return accessToken;
         } else {
-            window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+            const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
+            window.location = accessUrl;
+            console.log(accessUrl);
         }
+        
       },
     /* END - Stept 74 - Get a Spotify user’s access token */
 
-    /* START - Step  - Send a search request to the Spotify API*/
+    /* START - Step 84  - Send a search request to the Spotify API*/
     search(term) {
-        return fetch("https://api.spotify.com/v1/search?type=track&q=" + term, {
-          headers: { Authorization: "Bearer" + accessToken }
-        })
+        const accessToken = Spotify.getAccessToken();
+        return fetch(`https://api.spotify.com/v1/search?type=track&q=${term}`, {
+            headers: { Authorization: `Bearer ${accessToken}`}
+          })
         .then((response) => { 
            return response.json();
             })

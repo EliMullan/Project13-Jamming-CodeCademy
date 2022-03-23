@@ -12,14 +12,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults : [
-      { id: 1, name: 'mama1', artist: 'mama1', album: 'mama1'},
-      { id: 2, name: 'mama2', artist: 'mama2', album: 'mama2'},
-      { id: 3 , name: 'mama3', artist: 'mama3', album: 'mama3'} 
-    ],
-    
+      searchResults : [],    
       playlistName: 'mama',
-
       playlistTracks: [
         { id: 4, name: 'mama4', artist: 'mama4', album: 'mama4'},
         { id: 5, name: 'mama5', artist: 'mama5', album: 'mama5'},
@@ -60,8 +54,7 @@ class App extends React.Component {
   }
 
    search(term) {
-     console.log(term);
-    Spotify.search(term).then((searchResults) => {
+      Spotify.search(term).then((searchResults) => {
       this.setState({ searchResults: searchResults });
     });
   }
