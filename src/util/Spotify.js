@@ -1,7 +1,7 @@
 
 let accessToken;
-const clientID = 'f09e6689c43c47298a42bb8e36555809';
-const redirectURI = 'http://localhost:3000';
+const clientID = '...';
+const redirectURI = 'https://ElisJamming.surge.sh';
 
 const Spotify = {
  // Stept 74 - Get a Spotify user’s access token 

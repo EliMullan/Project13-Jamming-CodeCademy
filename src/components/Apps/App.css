@@ -2,10 +2,15 @@ body,
 html,
 #root {
   height: 100%;
+  background-image: url('./background_photo_desktop.jpg');
+  background-position: center;   
+  background-size: cover;  
+  background-repeat: no-repeat;
 }
 
 html {
   font-size: 18px;
+  
 }
 
 h1 {
@@ -28,11 +33,7 @@ h2 {
 
 .App {
   height: 100%;
-  padding: 0 17% 10% 17%;
-  background-image: url('./background_photo_desktop.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding: 0 17% 10% 17%; 
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
   color: #fff;
