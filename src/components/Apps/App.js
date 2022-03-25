@@ -3,7 +3,7 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { Playlist } from '../Playlist/Playlist';
 import './App.css';
-import {Spotify} from '../../util/Spotify';
+import Spotify from '../../util/Spotify';
 
 
 
@@ -13,12 +13,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       searchResults : [],    
-      playlistName: 'mama',
-      playlistTracks: [
-        { id: 4, name: 'mama4', artist: 'mama4', album: 'mama4'},
-        { id: 5, name: 'mama5', artist: 'mama5', album: 'mama5'},
-        { id: 6, name: 'mama6', artist: 'mama6', album: 'mama6'}
-      ]
+      playlistName: 'New Playlist',
+      playlistTracks: []
     };
     
     this.addTrack = this.addTrack.bind(this);
@@ -34,7 +30,7 @@ class App extends React.Component {
       return; 
     }
       tracks.push(track);
-      this.setState({playlistTracks: tracks});  
+      this.setState({playlistTracks: tracks}); 
   }
 
   removeTrack(track) {
@@ -47,29 +43,36 @@ class App extends React.Component {
     this.setState({playlistName: name});
   }
 
-  savePlaylist() {
-    const trackURIs = [];
-    this.state.playlistTracks.map(track => trackURIs.push(track.id));
-    return trackURIs;
-  }
-
-   search(term) {
+     search(term) {
       Spotify.search(term).then((searchResults) => {
       this.setState({ searchResults: searchResults });
     });
   }
 
+  savePlaylist() {
+    const trackURIs = this.state.playlistTracks.map(track => track.URI);
+      Spotify.savePlaylist(this.state.playlistName, trackURIs)
+      .then(() => { 
+        this.setState({
+          playlistName: "New Playlist",
+          playlistTracks: []
+        });
+      });
+  }
+ 
+
   render() {
     return (
     <div className="App">
-      <header className="App-header">
+      
 
   {/* inserted HTML for app JS - given by codecademy*/}
       <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
         <SearchBar 
-          onSearch={this.search}  />
+          onSearch={this.search}
+          onClick={Spotify.getAccessToken()}  />
         <div className="App-playlist">
          <SearchResults 
          searchResults={this.state.searchResults}
@@ -85,18 +88,9 @@ class App extends React.Component {
     </div>
 {/* end of inserted HTML for app JS */}
     
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      
+        
+      
     </div>
   );
  }
